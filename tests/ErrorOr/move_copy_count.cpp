@@ -1,4 +1,3 @@
-#include <print>
 #include <string>
 
 #include "RUtils/ErrorOr.hpp"
@@ -39,8 +38,8 @@ RUtils::ErrorOr<Foo> Get() {
 int main() {
     Foo f = Get();
 
-    std::println("Moved:  {} times", moves);
-    std::println("Copied: {} times", copies);
+    std::printf("Moved:  %d times", moves);
+    std::printf("Copied: %d times", copies);
 
     if(moves > 2) {
         return moves;

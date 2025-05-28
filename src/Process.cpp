@@ -1,4 +1,5 @@
 #include <cstring>
+#include <format>
 
 #include "RUtils/Process.hpp"
 #include "RUtils/Platform.hpp"

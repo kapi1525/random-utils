@@ -1,4 +1,5 @@
-#include <print>
+#include <cstdio>
+#include <format>
 
 #include "RUtils/Error.hpp"
 
@@ -14,7 +15,7 @@ Error::Error(std::string error, ErrorType type, std::source_location where) {
 
 
 void Error::print() {
-    std::print("{}:{}: In function \"{}\": {}: {}.\n", where.file_name(), where.line(), where.function_name(), get_type_str(type), error);
+    std::puts(std::format("{}:{}: In function \"{}\": {}: {}.\n", where.file_name(), where.line(), where.function_name(), get_type_str(type), error).c_str());
     std::fflush(stdout);
     std::fflush(stderr);
 }

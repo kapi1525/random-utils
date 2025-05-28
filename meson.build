@@ -4,7 +4,7 @@ project(
     version: '0.1.0',
     license: 'MIT',
     default_options: {
-        'cpp_std':          'c++23',
+        'cpp_std':          'c++20',
         'c_std':            'c11',
         'default_library':  'static',
         'prefer_static':    'true',

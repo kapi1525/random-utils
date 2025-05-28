@@ -1,6 +1,7 @@
 #include <cmath>
 #include <fstream>
 #include <filesystem>
+#include <format>
 
 #include "RUtils/Error.hpp"
 #include "curl/curl.h"
