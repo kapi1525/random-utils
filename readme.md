@@ -1,0 +1,1 @@
+Collection of random usefull thingies i wrote.
