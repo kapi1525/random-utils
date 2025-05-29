@@ -103,24 +103,24 @@ RUtils::ErrorOr<int> RUtils::run_process(std::filesystem::path executable, const
     si.cb = sizeof(si);
 
     if(!CreateProcessA(nullptr, command_line.get(), nullptr, nullptr, false, 0, nullptr, process_current_path.string().c_str(), &si, &pi)) {
-        return Error(std::fromat("CreateProcess failed: {}.", GetLastError()));
+        return Error(std::format("CreateProcess failed: {}.", GetLastError()));
     }
 
     // Wait until child process to exit
     if(WaitForSingleObject(pi.hProcess, INFINITE) == WAIT_FAILED) {
-        return Error(std::fromat("WaitForSingleObject failed: {}.", GetLastError()));
+        return Error(std::format("WaitForSingleObject failed: {}.", GetLastError()));
     }
 
     DWORD exit_code = 0;
     if(!GetExitCodeProcess(pi.hProcess, &exit_code)) {
-        return Error(std::fromat("GetExitCodeProcess failed: {}.", GetLastError()));
+        return Error(std::format("GetExitCodeProcess failed: {}.", GetLastError()));
     }
 
     if(!CloseHandle(pi.hProcess)) {
-        return Error(std::fromat("CloseHandle failed: {}.", GetLastError()));
+        return Error(std::format("CloseHandle failed: {}.", GetLastError()));
     }
     if(!CloseHandle(pi.hThread)) {
-        return Error(std::fromat("CloseHandle failed: {}.", GetLastError()));
+        return Error(std::format("CloseHandle failed: {}.", GetLastError()));
     }
 
     return exit_code;

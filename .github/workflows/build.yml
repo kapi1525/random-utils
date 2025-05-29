@@ -1,0 +1,46 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - '*'     # dont build for tags
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: windows-latest
+          - os: ubuntu-latest
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          persist-credentials: false
+
+      - name: Setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 'pypy3.9'
+
+      - name: Install meson and ninja
+        run: pip install meson ninja
+
+      - name: Setup MSVC
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Configure (debug)
+        run: meson setup bin
+
+      - name: Compile and run tests (debug)
+        run: meson test -C bin
+
+      - name: Configure (relese)
+        run: meson setup bin --wipe --buildtype release
+
+      - name: Compile and run tests (relese)
+        run: meson test -C bin

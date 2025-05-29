@@ -7,7 +7,6 @@ project(
         'cpp_std':          'c++20',
         'c_std':            'c11',
         'default_library':  'static',
-        'prefer_static':    'true',
         'warning_level':    '1',
     },
     meson_version: '>=1.2',
@@ -32,6 +31,7 @@ request_deps = [
             'tool': 'disabled',
             'tests': 'disabled',
             'unittests': 'disabled',
+            'default_library':  'static',
         },
     ).get_variable('curl_dep'),
 ]
