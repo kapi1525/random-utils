@@ -9,6 +9,11 @@
 
 #include "RUtils/Error.hpp"
 
+#ifdef max
+    #undef max
+    #warning MICROSOFT WHY
+#endif
+
 
 
 namespace RUtils {
@@ -19,6 +24,7 @@ namespace RUtils {
         using value_type = T;
         using value_type_not_void = std::conditional<std::is_void_v<value_type>, int, value_type>::type;
         using error_type = E;
+        using union_type = uint8_t[std::max(sizeof(value_type_not_void), sizeof(error_type))];
 
     public:
         ErrorOr() {
@@ -118,7 +124,7 @@ namespace RUtils {
         }
 
     protected:
-        uint8_t data[std::max(sizeof(value_type_not_void), sizeof(error_type))];
+        union_type data;
 
         value_type_not_void& as_value() {
             return *reinterpret_cast<value_type_not_void*>(data);

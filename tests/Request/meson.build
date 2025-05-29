@@ -1,5 +1,5 @@
 request_tests = [
-    # 'download',
+    'download',
 ]
 
 foreach i : request_tests

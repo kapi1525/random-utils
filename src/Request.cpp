@@ -4,9 +4,9 @@
 #include <format>
 
 #include "RUtils/Error.hpp"
-#include "curl/curl.h"
-
 #include "RUtils/Request.hpp"
+
+#include "curl/curl.h"
 
 
 
