@@ -15,7 +15,7 @@ Error::Error(std::string error, ErrorType type, std::source_location where) {
 
 
 void Error::print() {
-    std::puts(std::format("{}:{}: In function \"{}\": {}: {}.\n", where.file_name(), where.line(), where.function_name(), get_type_str(type), error).c_str());
+    std::puts(std::format("{}:{}: In function \"{}\": {}: {}.", where.file_name(), where.line(), where.function_name(), get_type_str(type), error).c_str());
     std::fflush(stdout);
     std::fflush(stderr);
 }

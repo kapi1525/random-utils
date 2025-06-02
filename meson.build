@@ -7,6 +7,7 @@ project(
         'cpp_std':          'c++20',
         'c_std':            'c11',
         'default_library':  'static',
+        'prefer_static':    'true',
         'warning_level':    '1',
     },
     meson_version: '>=1.2',
@@ -20,20 +21,6 @@ inc = include_directories('inc')
 
 base_deps = [
     dependency('threads')
-]
-
-
-request_deps = [
-    # TODO: Make curl dependencies static
-    subproject(
-        'curl',
-        default_options: {
-            'tool': 'disabled',
-            'tests': 'disabled',
-            'unittests': 'disabled',
-            'default_library':  'static',
-        },
-    ).get_variable('curl_dep'),
 ]
 
 
@@ -51,20 +38,8 @@ rutils_base_dep = declare_dependency(
 )
 
 
-rutils_request_lib = library(
-    'rutils-request',
-    sources: request_src,
-    include_directories: inc,
-    dependencies: [base_deps, request_deps, rutils_base_dep],
-    version: meson.project_version(),
-)
-
-rutils_request_dep = declare_dependency(
-    link_with: rutils_request_lib,
-    include_directories: inc,
-)
-
 meson.override_dependency('rutils-base', rutils_base_dep)
-meson.override_dependency('rutils-request', rutils_request_dep)
 
-subdir('tests')
+if not meson.is_subproject()
+    subdir('tests')
+endif

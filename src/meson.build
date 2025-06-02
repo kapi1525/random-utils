@@ -6,7 +6,3 @@ base_src = files(
     'Process.cpp',
     'Link.cpp',
 )
-
-request_src = files(
-    'Request.cpp',
-)

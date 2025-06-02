@@ -85,7 +85,7 @@ namespace RUtils {
                 return std::forward<U>(as_value());
             }
             print();
-            std::puts("Attempted to get value without handling an error. Aborting...\n");
+            std::puts("Attempted to get value without handling an error. Aborting...");
             std::fflush(stdout);
             std::fflush(stderr);
             std::abort();
@@ -95,7 +95,7 @@ namespace RUtils {
             if(!stores_value) {
                 return as_error();
             }
-            std::puts("Attempted to get error, but there was no error. Aborting...\n");
+            std::puts("Attempted to get error, but there was no error. Aborting...");
             std::fflush(stdout);
             std::fflush(stderr);
             std::abort();
