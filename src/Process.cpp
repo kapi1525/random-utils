@@ -140,11 +140,10 @@ RUtils::ErrorOr<int> RUtils::run_process(std::filesystem::path executable, const
         // child process
         std::filesystem::current_path(process_current_path);
         execv(executable.c_str(), (char**)argv.get());
-        perror("execv() failed");
+        Error::from_errno("execv() failed").print();
         exit(errno);
     } else if(pid < 0) {
-        perror("fork() failed");
-        return Error(std::format("fork() failed: {}", std::strerror(errno)));
+        return Error::from_errno("fork() failed");
     }
 
     int status = -1;
@@ -156,6 +155,6 @@ RUtils::ErrorOr<int> RUtils::run_process(std::filesystem::path executable, const
 
 #endif
 
-    RUtils::unreachable();
+    Error::unreachable();
     return -1;
 }

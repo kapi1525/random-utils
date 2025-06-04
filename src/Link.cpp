@@ -14,7 +14,7 @@ RUtils::ErrorOr<Link> Link::parse(const std::string& str) {
     std::regex file_with_fragment_regex("^(.*?)(?:#(.+))?$");
 
     if(str.empty()) {
-        return RUtils::Error("String is empty!", RUtils::ErrorType::invalid_arg);
+        return RUtils::Error("String is empty!", RUtils::ErrorType::invalid_argument);
     }
 
     // if the url doesnt match the regex, assume its just a path to local resource.

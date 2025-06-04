@@ -9,11 +9,6 @@
 
 #include "RUtils/Error.hpp"
 
-#ifdef max
-    #undef max
-    #warning MICROSOFT WHY
-#endif
-
 
 
 namespace RUtils {
@@ -43,21 +38,6 @@ namespace RUtils {
         }
 
 
-        // ErrorOr(const ErrorOr& other) {
-        //     if(other.stores_value) {
-        //         as_value() = other.as_value();
-        //     }
-        //     stores_value = other.stores_value;
-        // }
-
-        // ErrorOr(const ErrorOr&& other) {
-        //     if(other.stores_value) {
-        //         as_value() = std::move(other.as_value());
-        //     }
-        //     stores_value = other.stores_value;
-        // }
-
-
         ~ErrorOr() {
             if(stores_value) {
                 as_value().~value_type_not_void();
@@ -85,20 +65,14 @@ namespace RUtils {
                 return std::forward<U>(as_value());
             }
             print();
-            std::puts("Attempted to get value without handling an error. Aborting...");
-            std::fflush(stdout);
-            std::fflush(stderr);
-            std::abort();
+            Error::unreachable("Attempted to get value without handling an error.");
         }
 
         error_type& error() {
             if(!stores_value) {
                 return as_error();
             }
-            std::puts("Attempted to get error, but there was no error. Aborting...");
-            std::fflush(stdout);
-            std::fflush(stderr);
-            std::abort();
+            Error::unreachable("Attempted to get error, but there was no error.");
         }
 
 
@@ -115,12 +89,22 @@ namespace RUtils {
             error().print();
         }
 
+
+        bool stores_error_code() {
+            return error().stores_error_code();
+        }
+
+        
         std::string_view get_info() {
             return error().get_info();
         }
 
         ErrorType get_type() {
             return error().get_type();
+        }
+
+        int get_code() {
+            return error().get_code();
         }
 
     protected:

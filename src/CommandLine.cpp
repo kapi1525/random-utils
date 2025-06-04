@@ -2,6 +2,7 @@
 
 #include "RUtils/CommandLine.hpp"
 #include "RUtils/Helpers.hpp"
+#include "RUtils/Error.hpp"
 
 
 
@@ -28,7 +29,7 @@ bool RUtils::CommandLine::parse(int argc, const char* argv[]) {
             if((is_short_flag(arg) && arg[1] == arg_def.short_flag) || (is_long_flag(arg) && std::strcmp(arg_def.long_flag, arg+2) == 0)) {
                 std::visit(RUtils::visit_helper{
                     [](std::monostate arg) {
-                        unreachable();
+                        Error::unreachable();
                     },
                     [&](std::function<void()> callback) {
                         debug_print("Calling callback...\n");
