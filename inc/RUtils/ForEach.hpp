@@ -32,13 +32,14 @@ namespace RUtils {
 
         auto worker_func = [&]() {
             for(;;) {
-                std::lock_guard<std::mutex> lock(iterator_mutex);
+                iterator_mutex.lock();
                 if(begin == end) {
+                    iterator_mutex.unlock();
                     return;
                 }
                 auto& val = *begin;
                 begin++;
-                lock.~lock_guard();
+                iterator_mutex.unlock();
 
                 function(val);
             }
