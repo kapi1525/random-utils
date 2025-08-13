@@ -1,6 +1,5 @@
 #pragma once
 #include <thread>
-#include <algorithm>
 #include <vector>
 #include <mutex>
 
