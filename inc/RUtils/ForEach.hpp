@@ -26,6 +26,10 @@ namespace RUtils {
             return RUtils::for_each(begin, end, function);
         }
 
+        if(max_threads == 0) {
+            max_threads = UINT32_MAX;
+        }
+
 
         std::mutex iterator_mutex;
 
