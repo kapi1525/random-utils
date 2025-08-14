@@ -8,5 +8,7 @@ error_or_tests = [
 ]
 
 foreach i : error_or_tests
-    test('ErrorOr ' + i,executable(i, files(i + '.cpp'), dependencies: rutils_base_dep))
+    test_name = 'ErrorOr ' + i
+    
+    test(test_name, executable(test_name.underscorify(), files(i + '.cpp'), dependencies: rutils_base_dep))
 endforeach
