@@ -3,7 +3,16 @@ name: Build
 on:
   push:
     branches:
-      - '*'     # dont build for tags
+      - '*'
+  pull_request:
+  workflow_dispatch:
+
+
+# Cancel already running ci on a new push
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 
 jobs:
   build:
@@ -17,21 +26,21 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
-        with:
-          submodules: true
-          persist-credentials: false
+        uses: actions/checkout@v6
 
       - name: Setup python
         uses: actions/setup-python@v6
         with:
-          python-version: 'pypy3.9'
+          python-version: '>=3.13'
 
       - name: Install meson and ninja
         run: pip install meson ninja
 
       - name: Setup MSVC
-        uses: ilammy/msvc-dev-cmd@v1
+        if: ${{ matrix.os=='windows-latest' }}
+        uses: TheMrMilchmann/setup-msvc-dev@v4
+        with:
+          arch: x64
 
       - name: Configure (debug)
         run: meson setup bin
