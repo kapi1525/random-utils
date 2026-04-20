@@ -4,4 +4,5 @@ base_src = files(
     'CommandLine.cpp',
     'Process.cpp',
     'Link.cpp',
+    'Unicode.cpp',
 )
